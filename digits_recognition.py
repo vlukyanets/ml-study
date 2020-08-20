@@ -93,6 +93,7 @@ class DigitsRecognitionNeuralNetwork:
 def main():
     parser = argparse.ArgumentParser(description="Digits Recognition Neural Network")
     parser.add_argument("--iterations", type=int, default=30, help="NN learning iterations")
+    parser.add_argument("--hide-plots", action='store_true', help="Do not show figures with ML stats")
     args = parser.parse_args()
 
     digits_dataset = sklearndatasets.load_digits()
@@ -107,11 +108,12 @@ def main():
         all_pass_rates.append(pass_rate)
         network.train(digits_dataset, 0.3, 0.1 * (1 - iteration/total_iterations))
 
-    plt.figure(1)
-    plt.plot(all_errors)
-    plt.figure(2)
-    plt.plot(all_pass_rates)
-    plt.show()
+    if not args.hide_plots:
+        plt.figure(1)
+        plt.plot(all_errors)
+        plt.figure(2)
+        plt.plot(all_pass_rates)
+        plt.show()
 
 
 if __name__ == "__main__":

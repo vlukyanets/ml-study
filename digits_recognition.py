@@ -30,9 +30,8 @@ def bounds(x, left, right):
 
 
 class DigitsRecognitionNeuralNetwork:
-    def __init__(self):
-        # Layers: 64 -> 32 -> 20 -> 10
-        self.layer_sizes = [64, 32, 20, 10]
+    def __init__(self, layer_sizes):
+        self.layer_sizes = layer_sizes
         self.interlayer_sizes = [(x, y) for x, y in zip(self.layer_sizes[:-1], self.layer_sizes[1:])]
         self.depth = len(self.layer_sizes)
         self.weights = [2 * numpy.random.random_sample(interlayer_size) - 1
@@ -97,7 +96,7 @@ def main():
     args = parser.parse_args()
 
     digits_dataset = sklearndatasets.load_digits()
-    network = DigitsRecognitionNeuralNetwork()
+    network = DigitsRecognitionNeuralNetwork([64, 32, 20, 10])
 
     all_errors, all_pass_rates = [], []
     total_iterations = args.iterations

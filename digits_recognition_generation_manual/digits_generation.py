@@ -1,34 +1,11 @@
 from sklearn import datasets as sklearndatasets
 import argparse
 from digitsnn import DigitsGenerationNeuralNetwork, display_digit
-
-
-def check_float_value_0_1(value):
-    fvalue = float(value)
-    if fvalue <= 0.0 or fvalue > 1.0:
-        raise argparse.ArgumentTypeError("Value should be in range (0; 1)")
-
-    return fvalue
-
-
-def check_int_value_0_9(value):
-    ivalue = int(value)
-    if ivalue < 0 or ivalue > 9:
-        raise argparse.ArgumentTypeError("Value should be in range [0; 9]")
-
-    return ivalue
-
-
-def check_non_negative_int(value):
-    ivalue = int(value)
-    if ivalue < 0:
-        raise argparse.ArgumentTypeError("Value count should not be negative")
-
-    return ivalue
+from digitsnn import check_non_negative_int, check_int_value_0_9, check_float_value_0_1
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Digits Recognition Neural Network")
+    parser = argparse.ArgumentParser(description="Digits Generation Neural Network")
     parser.add_argument("--iterations", type=check_non_negative_int, default=30,
                         help="NN learning iterations (default 30)")
     parser.add_argument("--draw", type=check_int_value_0_9, help="Perform check of NN")

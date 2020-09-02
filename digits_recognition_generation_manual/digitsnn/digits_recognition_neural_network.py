@@ -6,13 +6,15 @@ from digitsnn.utils import sigmoid_array
 
 
 class DigitsRecognitionNeuralNetwork(DigitsNeuralNetworkBase):
-    def __init__(self, layer_sizes):
-        super().__init__(layer_sizes)
+    def __init__(self, layer_sizes, has_bias_neuron):
+        super().__init__(layer_sizes, has_bias_neuron)
 
     def forward_propagation(self, input_data):
         (image, target) = input_data
         values = [numpy.copy(image).flatten()]
-        for i in range(0, self.depth - 1):
+        for i in range(0, self.depth-1):
+            if self.has_bias_neuron:
+                values[-1] = numpy.append(values[-1], [1.0])
             values.append(sigmoid_array(numpy.dot(values[i], self.weights[i])))
 
         errors_output_layer = -values[-1]

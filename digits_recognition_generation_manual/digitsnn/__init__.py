@@ -1,3 +1,4 @@
 from digitsnn.digits_recognition_neural_network import DigitsRecognitionNeuralNetwork
 from digitsnn.digits_generation_neural_network import DigitsGenerationNeuralNetwork
 from digitsnn.digits_recognition_qt import display_digit
+from digitsnn.utils import check_float_value_0_1, check_int_value_0_9, check_non_negative_int

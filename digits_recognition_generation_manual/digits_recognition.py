@@ -2,22 +2,7 @@ from sklearn import datasets as sklearndatasets
 import matplotlib.pyplot as plt
 import argparse
 from digitsnn import DigitsRecognitionNeuralNetwork
-
-
-def check_float_value_0_1(value):
-    fvalue = float(value)
-    if fvalue <= 0.0 or fvalue > 1.0:
-        raise argparse.ArgumentTypeError("Value should be in range (0; 1)")
-
-    return fvalue
-
-
-def check_non_negative_int(value):
-    ivalue = int(value)
-    if ivalue < 0:
-        raise argparse.ArgumentTypeError("Value count should not be negative")
-
-    return ivalue
+from digitsnn import check_float_value_0_1, check_non_negative_int
 
 
 def main():
@@ -36,6 +21,8 @@ def main():
                         help="Learning coefficient (default 0.1)")
     parser.add_argument("--disable-dynamic-learning-coefficient", action='store_true',
                         help="Disable decreasing learning coefficient linearly to zero at last iteration")
+    parser.add_argument("--bias-neuron", action='store_true',
+                        help="Add bias neuron to neural network (useful only for new network)")
     args = parser.parse_args()
 
     digits_dataset = sklearndatasets.load_digits()
@@ -43,7 +30,8 @@ def main():
     if load_from_filename:
         network = DigitsRecognitionNeuralNetwork.load(load_from_filename)
     else:
-        network = DigitsRecognitionNeuralNetwork([64, 32, 20, 10])
+        bias_neuron = args.bias_neuron
+        network = DigitsRecognitionNeuralNetwork([64, 32, 20, 10], bias_neuron)
 
     all_errors, all_pass_rates = [], []
     called_train = False
